@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['logged_in'])) {
+    header('Location: login.php');
+    exit;
+}
 $tasksFile = 'tasks.json';
 $tasks = [];
 if (file_exists($tasksFile)) {
@@ -13,6 +18,8 @@ if (file_exists($tasksFile)) {
   <title>My To-Do List</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c6ff3d">
 </head>
 <body>
 
@@ -69,5 +76,10 @@ if (file_exists($tasksFile)) {
   </div>
 
   <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
